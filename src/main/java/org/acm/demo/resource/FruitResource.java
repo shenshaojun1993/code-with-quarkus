@@ -2,39 +2,40 @@ package org.acm.demo.resource;
 
 import org.acm.demo.model.Fruit;
 
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.Objects;
 
-@Path("/fruits")
+@Path("/fruit")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class FruitResource {
 
-    private Set<Fruit> fruits = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
-
-    public FruitResource() {
-        fruits.add(new Fruit("Apple", "Winter fruit"));
-        fruits.add(new Fruit("Pineapple", "Tropical fruit"));
-    }
-
     @GET
-    public Response get() {
-        return Response.ok(fruits).build();
+    @Path("/list")
+    public Response getAll() {
+        return Response.ok(Fruit.findAll()).build();
     }
 
     @POST
+    @Path("/add")
+    @Transactional
     public Response add(Fruit f) {
-        fruits.add(f);
-        return Response.ok(fruits).build();
+        if (Objects.isNull(Fruit.findByNameAndDescription(f.name, f.description))) {
+            Fruit.persist(f);
+            return Response.ok(Fruit.findByNameAndDescription(f.name, f.description)).build();
+        } else {
+            return Response.ok().build();
+        }
     }
 
     @DELETE
-    public Response delete(Fruit f) {
-        fruits.removeIf(single -> single.name.contentEquals(f.name));
-        return Response.ok(fruits).build();
+    @Path("/delete")
+    @Transactional
+    public Response delete(Integer id) {
+        Fruit.deleteById(id);
+        return Response.ok(Fruit.findAll()).build();
     }
 }
