@@ -5,11 +5,11 @@ import org.acm.demo.common.MyException;
 import org.acm.demo.model.Fruit;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Collections;
-import java.util.Objects;
+
 
 @Path("/fruit")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,19 +19,19 @@ public class FruitResource {
     @GET
     @Path("/list")
     public Response getAll() {
-        return Response.ok(Fruit.findAll()).build();
+        return Response.ok(Fruit.findAll().list()).build();
     }
 
     @POST
     @Path("/add")
     @Transactional
-    public Response add(Fruit f) throws MyException {
-        if (Fruit.findByNameAndDescription(f.name, f.description).isEmpty ()) {
+    public Response add(@Valid Fruit f) throws MyException {
+        if (Fruit.findByNameAndDescription(f.name, f.description) == null) {
             Fruit.persist(f);
             return Response.ok(Fruit.findByNameAndDescription(f.name, f.description)).build();
         } else {
 //            throw new MyException (String.format ("%s is already exists", f));
-            return Response.status (200).entity (new CustomResponse (200, "Already exists")).build ();
+            return Response.ok(new CustomResponse (401, "Already exists")).build ();
         }
     }
 

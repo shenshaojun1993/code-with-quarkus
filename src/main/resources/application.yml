@@ -9,7 +9,7 @@ quarkus:
     username: jcat
     password: 123
     jdbc:
-      url: jdbc:h2:mem:jcatServer
+      url: jdbc:h2:file:~/db/local_db
   hibernate-orm:
     database:
       generation: update
