@@ -30,12 +30,12 @@ public class ConfigResource {
     public String supersonic() {
         final int mach = displayMach.orElse(1);
         final BigDecimal speed = BigDecimal.valueOf(speedOfSound)
-            .multiply(displayUnitFactor)
-            .multiply(BigDecimal.valueOf(mach));
+                .multiply(displayUnitFactor)
+                .multiply(BigDecimal.valueOf(mach));
         return String.format("Mach %d is %.3f %s",
-            mach,
-            speed,
-            displayUnitName
+                mach,
+                speed,
+                displayUnitName
         );
     }
 }

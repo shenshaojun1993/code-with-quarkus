@@ -31,7 +31,7 @@ public class FruitResource {
             return Response.ok(Fruit.findByNameAndDescription(f.name, f.description)).build();
         } else {
 //            throw new MyException (String.format ("%s is already exists", f));
-            return Response.ok(new CustomResponse (401, "Already exists")).build ();
+            return Response.ok(new CustomResponse(401, "Already exists")).build();
         }
     }
 

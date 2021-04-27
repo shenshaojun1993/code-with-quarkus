@@ -17,6 +17,10 @@ public class Gift extends PanacheEntity {
         this.name = name;
     }
 
+    public static List<Gift> findById(Long id) {
+        return findAll().list();
+    }
+
     public Long getId() {
         return id;
     }
@@ -31,9 +35,5 @@ public class Gift extends PanacheEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public static List<Gift> findById(Long id) {
-        return findAll().list();
     }
 }

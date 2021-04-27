@@ -1,14 +1,10 @@
 package org.acm.demo.model;
 
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import java.util.List;
 
 @Entity
 public class Fruit extends PanacheEntityBase {
