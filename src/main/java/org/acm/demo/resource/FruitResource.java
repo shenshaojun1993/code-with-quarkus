@@ -17,13 +17,13 @@ import javax.ws.rs.core.Response;
 public class FruitResource {
 
     @GET
-    @Path("/list")
+    @Path("list")
     public Response getAll() {
         return Response.ok(Fruit.findAll().list()).build();
     }
 
     @POST
-    @Path("/add")
+    @Path("add")
     @Transactional
     public Response add(@Valid Fruit f) throws MyException {
         if (Fruit.findByNameAndDescription(f.name, f.description) == null) {
@@ -36,7 +36,7 @@ public class FruitResource {
     }
 
     @DELETE
-    @Path("/delete")
+    @Path("delete")
     @Transactional
     public Response delete(Integer id) {
         Fruit.deleteById(id);
