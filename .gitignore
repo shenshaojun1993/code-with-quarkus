@@ -35,5 +35,10 @@ nb-configuration.xml
 *.orig
 *.rej
 
+#/front
+/front-end/node_modules
+/front-end/.vscode
+/front-end/dist
+
 # Local environment
 .env
